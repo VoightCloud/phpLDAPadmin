@@ -1,5 +1,8 @@
 - name: Initialize Kubernetes Control Plane
   hosts: controlplane
+  var:
+    namespace: authentication
+
   tasks:
     - name: Install cetic repos
       community.kubernetes.helm_repository:
@@ -10,4 +13,4 @@
       command: helm repo update
 
     - name: Apply phpldapadmin chart
-      command: helm install phpldapadmin cetic/phpldapadmin -f ~/privateKube/phpldapadmin.yaml
+      command: helm install -n {{ namespace }} phpldapadmin cetic/phpldapadmin -f ~/privateKube/phpldapadmin.yaml
