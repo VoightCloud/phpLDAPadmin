@@ -5,7 +5,7 @@
 
 ## TODO: add this in the deployment.yaml
 env:
-  PHPLDAPADMIN_LDAP_HOSTS: openldap.default.svc.cluster.local
+  PHPLDAPADMIN_LDAP_HOSTS: openldap.authentication.svc.cluster.local
   PHPLDAPADMIN_HTTPS: "false"
   PHPLDAPADMIN_TRUST_PROXY_SSL: "true"
 

@@ -2,4 +2,4 @@
   hosts: controlplane
   tasks:
     - name: Reset Kubernetes
-      command: helm uninstall haproxy
+      command: helm uninstall -n authentication phpldapadmin
