@@ -26,7 +26,7 @@
 #      openldapadmin:
 #        password: "{{ openldapadminpassword }}"
 
-- name: Apply OpenLDAP
+- name: Apply phpLDAPAdmin
   kubernetes.core.helm:
     name: "{{ deployment }}"
     chart_ref: cetic/phpldapadmin
@@ -45,7 +45,7 @@
         enabled: true
         secret: "site-ca"
       service:
-        loadBalancerIP: 192.168.137.82
+        loadBalancerIP: 192.168.137.83
         type: LoadBalancer
       affinity:
         nodeAffinity:
