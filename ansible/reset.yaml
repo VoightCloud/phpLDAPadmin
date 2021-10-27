@@ -1,5 +1,0 @@
-- name: Reset All Nodes and Control Plane
-  hosts: controlplane
-  tasks:
-    - name: Reset Kubernetes
-      command: helm uninstall -n authentication phpldapadmin

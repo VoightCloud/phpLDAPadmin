@@ -1,0 +1,58 @@
+- name: Install Stable repos
+  community.kubernetes.helm_repository:
+    name: cetic
+    repo_url: "https://cetic.github.io/helm-charts"
+
+- name: Create namespace
+  community.kubernetes.k8s:
+    name: "{{ namespace }}"
+    api_version: v1
+    kind: namespace
+    state: present
+
+#- name: Add Voight.org Certificates
+#  kubernetes.core.helm:
+#    name: "{{ deployment }}-certificates"
+#    chart_ref: ./roles/openldap/files/global
+#    release_namespace: "{{ namespace }}"
+#    release_values:
+#      namespace: "{{ namespace }}"
+#      tls:
+#        key: "{{ voightorgkey }}"
+#        crt: "{{ voightorgcrt }}"
+#        ca: "{{ voightorgca }}"
+#      openldapconfig:
+#        password: "{{ openldapconfigpassword }}"
+#      openldapadmin:
+#        password: "{{ openldapadminpassword }}"
+
+- name: Apply OpenLDAP
+  kubernetes.core.helm:
+    name: "{{ deployment }}"
+    chart_ref: cetic/phpldapadmin
+    release_namespace: "{{ namespace }}"
+    release_values:
+      env:
+        PHPLDAPADMIN_LDAP_HOSTS: "openldap.{{ namespace }}.svc.cluster.local"
+        PHPLDAPADMIN_HTTPS: "false"
+        PHPLDAPADMIN_TRUST_PROXY_SSL: "true"
+      image:
+        tag: 0.9.0
+      tls:
+        enabled: true
+        secret: "site-cert"
+      CA:
+        enabled: true
+        secret: "site-ca"
+      service:
+        loadBalancerIP: 192.168.137.82
+        type: LoadBalancer
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64

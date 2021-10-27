@@ -1,0 +1,9 @@
+- name: Initialize Kubernetes Control Plane
+  hosts: localhost
+  connection: local
+
+  vars:
+    namespace: build
+
+  roles:
+    - phpLDAPadmin
