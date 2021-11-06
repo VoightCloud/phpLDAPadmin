@@ -1,7 +1,7 @@
 # phpLDAPadmin
 
+https://github.com/cetic/helm-phpLDAPadmin/blob/master/values.yaml
 
 ```shell script
-cd ansible
-ansible-playbook --vault-password-file ~/secret.txt playbook.yaml
+ansible-playbook --vault-password-file=~/vaultpwd ./playbook.yaml
 ```
