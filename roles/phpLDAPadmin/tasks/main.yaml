@@ -45,4 +45,14 @@
         - secretName: "site-cert"
           hosts:
           - phpldapadmin.voight.org
+      readinessProbe:
+        httpGet:
+          path: /
+          port: http
+        periodSeconds: 30
+      livenessProbe:
+        httpGet:
+          path: /
+          port: http
+        periodSeconds: 30
 
